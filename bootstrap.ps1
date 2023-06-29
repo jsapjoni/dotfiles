@@ -6,8 +6,9 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
 }
 
 # Insert App Installasjon via Package Manager
+scoop install git 
 scoop bucket add extras
-scoop install git 7zip bat curl dark fd fzf gcc jq lazygit lua make neofetch neovim nvm pwsh python sudo windows-terminal --global
+scoop install 7zip bat curl dark fd fzf gcc jq lazygit lua make neofetch neovim nvm pwsh python sudo windows-terminal
 
 git clone https://github.com/jsapjoni/dotfiles .
 

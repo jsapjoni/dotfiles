@@ -1,11 +1,8 @@
-# Tilgjengeliggjør scriptet
+# Tilgjengeliggjør scriptet.
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
-
-
-# Checks if script is run as administrator
+# Checks if script is run as administrator.
 $IsAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
 if (!($IsAdmin)) {
   Write-Host "Please rerun this script as administrator"
   Write-Host "Aborting the script..."
@@ -13,7 +10,7 @@ if (!($IsAdmin)) {
 }
 
 
-# Checks if Scoop is installed
+# Checks if Scoop is installed.
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
   Write-Host "Could not find scoop package manager"
   Write-Host "Installing scoop package manager"
@@ -29,26 +26,23 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     throw
   }
   
+  # Checks if git is installed.
   Write-Host "Checking if git is installed in scoop..."
   if ((scoop list git).Name -like "git") {
-    Write-Host "The app git" -NoNewline
-    Write-Host $_ -ForegroundColor Green -NoNewline
+    Write-Host "The app " -NoNewline
+    Write-Host "git" -ForegroundColor Green -NoNewline
     Write-Host " is installed!" -NoNewline
   }
   
   else {
     Write-Host "The app git" -NoNewline
-    Write-Host $_ -ForegroundColor Red -NoNewline
+    Write-Host "git" -ForegroundColor Red -NoNewline
     Write-Host " is not installed." -NoNewline
     Write-Host "Initiating installation..."
-    scoop install $_
+    scoop install git
     if ((scoop list git).Name -like "git") {
       scoop bucket add extras
     }
-  }
-  
-  if (!(Test-Path -Path ~\.dotfiles)) {
-    git clone https://github.com/jsapjoni/dotfiles .\.dotfiles
   }
 }
 
@@ -94,6 +88,8 @@ $AppsList | ForEach-Object {
     Write-Host "Initiating installation..."
     scoop install $_
   }
+
+  & "$_-config.ps1"
 }
 
 Write-Host "Bootstrapping powershell profile from dotfiles"

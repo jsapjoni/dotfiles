@@ -1,6 +1,18 @@
 # Tilgjengeliggjør scriptet
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
+
+
+# Checks if script is run as administrator
+$IsAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+if (!($IsAdmin)) {
+  Write-Host "Please rerun this script as administrator"
+  Write-Host "Aborting the script..."
+  throw
+}
+
+
 # Checks if Scoop is installed
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
   Write-Host "Could not find scoop package manager"

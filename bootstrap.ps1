@@ -49,6 +49,8 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
 # ------------------------- VARIABLE DECLEARATION ------------------------------#
 $ProfileType = $PROFILE.CurrentUserCurrentHost
 $ConfigFiles = "$($MyInvocation.MyCommand.Path | Split-Path)\windows\powershell\config"
+$WindowsConfigs = "$($MyInvocation.MyCommand.Path | Split-Path)\Windows"
+$CommonConfigs = "$($MyInvocation.MyCommand.Path | Split-Path)\Common"
 # ------------------------------------------------------------------------------#
 
 $AppsList = @(
@@ -88,8 +90,28 @@ $AppsList | ForEach-Object {
     Write-Host "Initiating installation..."
     scoop install $_
   }
-
-  & "$_-config.ps1"
+  
+  Write-Host "Setting up configuration for " -NoNewline
+  Write-Host $_ -ForegroundColor Green
+  
+  foreach ($app in $Apps) {
+    Get-ChildItem -Path $WindowsConfigs, $CommonConfigs |
+    ForEach-Object {
+      if ($app -like $_.Name) {
+        try { 
+          Write-Host "Attempting to import config file for " -NoNewline
+          Write-Host "$app ..."
+          . "$($_.FullName)\$app-config.ps1"
+          Write-Host "Imported config file for app " -NoNewline
+          Write-Host "$app" -ForegroundColor Green -NoNewline
+        }
+        catch { 
+          Write-Host "Could not find the specified config file for app " -NoNewline
+          Write-Host "$app" -ForegroundColor Red
+        }
+      }
+    }
+  }
 }
 
 Write-Host "Bootstrapping powershell profile from dotfiles"

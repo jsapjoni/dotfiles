@@ -16,7 +16,8 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
   Write-Host "Installing scoop package manager"
   
   try {
-    Invoke-RestMethod -Uri "get.scoop.sh" | Invoke-Expression -ErrorAction Stop
+    Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin" -ErrorAction Stop
+    # Invoke-RestMethod -Uri "get.scoop.sh" | Invoke-Expression -ErrorAction Stop
     Write-Host "Scoop installed" -ForegroundColor Green
   }
   
@@ -54,7 +55,6 @@ $CommonConfigs = "$($MyInvocation.MyCommand.Path | Split-Path)\Common"
 # ------------------------------------------------------------------------------#
 
 $AppsList = @(
-  "git",
   "pwsh",
   "7zip",
   "bat",

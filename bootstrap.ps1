@@ -1,7 +1,9 @@
 # Tilgjengeliggjør scriptet.
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
-# Checks if script is run as administrator.
+#------------------------------------------------------------------------------#
+# Checks if script is run as administrator.------------------------------------#
+#------------------------------------------------------------------------------#
 $IsAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 if (!($IsAdmin)) {
   Write-Host "Please rerun this script as administrator"
@@ -9,15 +11,20 @@ if (!($IsAdmin)) {
   throw
 }
 
-
-# Checks if Scoop is installed.
+#------------------------------------------------------------------------------#
+# Checks if Scoop is installed.------------------------------------------------#
+#------------------------------------------------------------------------------#
+Write-Host "Checking if " -NoNewline
+Write-Host "scoop " -NoNewline -ForegroundColor Green
+Write-Host "is installed."
 if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
-  Write-Host "Could not find scoop package manager"
-  Write-Host "Installing scoop package manager"
+  Write-Host "Could not find " -NoNewline
+  Write-Host "scoop " -ForegroundColor Red -NoNewline
+  Write-Host "package manager"
+  Write-Host "Installing scoop package manager..."
   
   try {
     Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin" -ErrorAction Stop
-    # Invoke-RestMethod -Uri "get.scoop.sh" | Invoke-Expression -ErrorAction Stop
     Write-Host "Scoop installed" -ForegroundColor Green
   }
   
@@ -26,25 +33,45 @@ if (!(Get-Command scoop -ErrorAction SilentlyContinue)) {
     Write-Host "Aborting bootstrapping ..." -ForegroundColor Red
     throw
   }
-  
-  # Checks if git is installed.
-  Write-Host "Checking if git is installed in scoop..."
+} 
+else { 
+  Write-Host "Scoop " -ForegroundColor Green -NoNewline
+  Write-Host "is installed!"
+}
+#------------------------------------------------------------------------------#
+# Checks if git is installed.--------------------------------------------------#
+#------------------------------------------------------------------------------#
+Write-Host "Checking if git is installed in scoop..."
+if ((scoop list git).Name -like "git") {
+  Write-Host "The app " -NoNewline
+  Write-Host "git" -ForegroundColor Green -NoNewline
+  Write-Host " is installed!" -NoNewline
+}
+else {
+  Write-Host "The app " -NoNewline
+  Write-Host "git" -ForegroundColor Red -NoNewline
+  Write-Host " is not installed." -NoNewline
+  Write-Host "Initiating installation..."
+  scoop install git
+  if (!($LASTEXITCODE -eq 0)) {
+    Write-Host "Could not install git" -ForegroundColor Red
+    throw "Aborting bootstrapping script..."
+  }
   if ((scoop list git).Name -like "git") {
-    Write-Host "The app " -NoNewline
-    Write-Host "git" -ForegroundColor Green -NoNewline
-    Write-Host " is installed!" -NoNewline
+    scoop bucket add extras
   }
-  
-  else {
-    Write-Host "The app git" -NoNewline
-    Write-Host "git" -ForegroundColor Red -NoNewline
-    Write-Host " is not installed." -NoNewline
-    Write-Host "Initiating installation..."
-    scoop install git
-    if ((scoop list git).Name -like "git") {
-      scoop bucket add extras
-    }
-  }
+}
+
+#------------------------------------------------------------------------------#
+# Checks for .dotfiles repository----------------------------------------------#
+#------------------------------------------------------------------------------#
+Write-Host "Checking if .dotfiles repository is installed"
+if (!(Test-Path -Path "$env:USERPROFILE\.dotfiles")) {
+  New-Item -Path "$env:USERPROFILE" -Name ".dotfiles" -ItemType Directory
+  git clone https://raw.githubusercontent.com/jsapjoni/dotfiles .\dotfiles
+} 
+else {
+  Write-Host "Dotfiles is already installed!"
 }
 
 # ------------------------- VARIABLE DECLEARATION ------------------------------#

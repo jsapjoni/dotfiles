@@ -72,7 +72,7 @@ if (!(Test-Path -Path "$env:USERPROFILE\.dotfiles")) {
   New-Item -Path "$env:USERPROFILE" -Name ".dotfiles" -ItemType Directory | Out-Null
   Write-Host "Cloning remote repository from URL: " -NoNewline
   Write-Host "https://github.com/jsapjoni/dotfiles" -ForegroundColor Green
-  git clone https://github.com/jsapjoni/dotfiles .\dotfiles
+  git clone https://github.com/jsapjoni/dotfiles ~\.dotfiles
   if ($LASTEXITCODE -ne 0) {
     Write-Host "Could not clone remote repository, aborting script."
     throw 

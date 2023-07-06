@@ -45,7 +45,7 @@ Write-Host "Checking if git is installed in scoop..."
 if ((scoop list git).Name -like "git") {
   Write-Host "The app " -NoNewline
   Write-Host "git" -ForegroundColor Green -NoNewline
-  Write-Host " is installed!" -NoNewline
+  Write-Host " is installed!"
 }
 else {
   Write-Host "The app " -NoNewline
@@ -65,13 +65,21 @@ else {
 #------------------------------------------------------------------------------#
 # Checks for .dotfiles repository----------------------------------------------#
 #------------------------------------------------------------------------------#
-Write-Host "Checking if .dotfiles repository is installed"
+Write-Host "Checking if .dotfiles repository is built"
 if (!(Test-Path -Path "$env:USERPROFILE\.dotfiles")) {
-  New-Item -Path "$env:USERPROFILE" -Name ".dotfiles" -ItemType Directory
-  git clone https://raw.githubusercontent.com/jsapjoni/dotfiles .\dotfiles
+  Write-Host ".dotfiles repository is not built!"
+  Write-Host "Creating new .dotfiles folder."
+  New-Item -Path "$env:USERPROFILE" -Name ".dotfiles" -ItemType Directory | Out-Null
+  Write-Host "Cloning remote repository from URL: " -NoNewline
+  Write-Host "https://github.com/jsapjoni/dotfiles" -ForegroundColor Green
+  git clone https://github.com/jsapjoni/dotfiles .\dotfiles
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "Could not clone remote repository, aborting script."
+    throw 
+  }
 } 
 else {
-  Write-Host "Dotfiles is already installed!"
+  Write-Host "Dotfiles is already built!"
 }
 
 # ------------------------- VARIABLE DECLEARATION ------------------------------#

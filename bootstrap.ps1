@@ -77,6 +77,8 @@ if (!(Test-Path -Path "$env:USERPROFILE\.dotfiles")) {
     Write-Host "Could not clone remote repository, aborting script."
     throw 
   }
+  Write-Host ".dotfiles repository successfully build on path " -NoNewline
+  Write-Host "$(~\.dotfiles)" -ForegroundColor Green
 } 
 else {
   Write-Host "Dotfiles is already built!"

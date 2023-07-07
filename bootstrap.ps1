@@ -131,15 +131,14 @@ $AppsList | ForEach-Object {
 }
 
 $AppSource = Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1
-
 foreach ($App in $AppsList){
   Write-Host "Locating " -NoNewline
   Write-Host "$App-config.ps1 " -NoNewline -ForegroundColor Green
   Write-Host "for " -NoNewline
   Write-Host "$App " -ForegroundColor Green -NoNewline
-  Write-Host "in " -NoNewline
-  Write-Host "$($AppSource | Where-Object {$_.FullName})" -ForegroundColor Green
-  if (($AppSource | Where-Object {$_.Name -like "$App-config.ps1"}) -is [system.object]) {
+  $AppDir = ($AppSource | Where-Object {$_.Name -like "$App-config.ps1"})
+  if ($AppDir -is [system.object]) {
+    $AppDir
     Write-Host "Found " -NoNewline
     Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
     Write-Host "for " -NoNewline

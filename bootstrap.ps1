@@ -145,7 +145,7 @@ foreach ($App in $AppsList){
     Write-Host "$App" -ForegroundColor Green
     Write-Host "Attempting to import config file for " -NoNewline
     Write-Host "$App" -ForegroundColor Green
-    . "$AppDir"
+    . "$($AppDir.FullName)"
   }
 }
 

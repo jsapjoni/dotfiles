@@ -89,7 +89,6 @@ $ProfileType = $PROFILE.CurrentUserCurrentHost
 $DotfilesRepo = "$HOME\.dotfiles"
 $WindowsApps= "$DotfilesRepo\Windows"
 $CommonApps= "$DotfilesRepo\Common"
-$ConfigFiles = "$DotfilesRepo\Windows\powershell\config"
 # ------------------------------------------------------------------------------#
 
 $AppsList = @(

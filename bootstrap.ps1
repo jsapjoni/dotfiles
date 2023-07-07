@@ -135,6 +135,7 @@ $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
 $CommonConfigs
 $WindowsConfigs
 $AppSource
+($AppSource | Where-Object {$_.Name -like $App})
 foreach ($app in $AppsList){
   Write-Host "Checking $app... "
   (($AppSource | Where-Object {$_.Name -like $App}) -is [System.Object])

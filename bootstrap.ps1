@@ -133,18 +133,18 @@ $AppsList | ForEach-Object {
 
 $AppSource = Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1
 foreach ($App in $AppsList){
-  Write-Host "Locating " -NoNewline
-  Write-Host "$App-config.ps1 " -NoNewline -ForegroundColor Green
+  Write-Host "Attempting to find app configuration file: " -NoNewline
+  Write-Host "$App-config.ps1 " -NoNewline 
   Write-Host "for " -NoNewline
   Write-Host "$App " -ForegroundColor Green 
   $AppDir = ($AppSource | Where-Object {$_.Name -like "$App-config.ps1"})
   if ($AppDir -is [system.object]) {
     try {
-      Write-Host "Found " -NoNewline
+      Write-Host "Found app configuration file: " -NoNewline
       Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
       Write-Host "for " -NoNewline
       Write-Host "$App" -ForegroundColor Green
-      Write-Host "Attempting to import config file for " -NoNewline
+      Write-Host "Attempting to import app configuration file for " -NoNewline
       Write-Host "$App" -ForegroundColor Green
       . "$($AppDir.FullName)"
     }

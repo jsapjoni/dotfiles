@@ -1,5 +1,5 @@
 try {
-  New-Item -ItemType SymbolicLink -Path "$env:LOCALAPPDATA\nvim" -Value $(Resolve-Path ~\.dotfiles\common\neovim\neovim) | Out-Null
+  New-Item -ItemType SymbolicLink -Path "$env:LOCALAPPDATA\nvim" -Value $(Resolve-Path ~\.dotfiles\common\neovim\neovim) -ErrorAction SilentlyContinue | Out-Null 
 }
 catch [System.IO.IOException] {
   Write-Host "SymbolicLink already exists"

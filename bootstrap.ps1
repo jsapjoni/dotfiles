@@ -111,6 +111,7 @@ $AppsList = @(
   "sudo",
   "ripgrep",
   "windows-terminal",
+  "main/starship"
   "lazygit"
 )
 

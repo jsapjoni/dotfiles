@@ -130,19 +130,19 @@ $AppsList | ForEach-Object {
   }
 }
 
+#$AppSource = Get-ChildItem -Path .\common\, .\windows\
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
-foreach ($app in $AppsList) {
-  $CurrentApp = ($AppSource | Where-Object {$_.Name -like $app})
-  $CurrentApp
-  if ($CurrentApp -is [System.Object]) {
+foreach ($app in $AppsList){
+  Write-Host "Checking $app... "
+  if (($AppSource | Where-Object {$_.Name -like $App}) -is [system.object]) {
     Write-Host "Found app config folder"
     Write-Host "Attempting to import config file for " -NoNewline
-    Write-Host "$app ..."
+    Write-Host "$app is true"
     #. "$($CurrentApp.FullName)"
-    Write-Host "Could not find the specified config file for app " -NoNewline
-    Write-Host "$app" -ForegroundColor Red
+    Write-Host "Found app config folder"
+    Write-Host "Attempting to import config file for " -NoNewline
   }
-}  
+}
 
 Write-Host "Bootstrapping powershell profile from dotfiles"
 if (!(Test-Path -Path $ProfileType)){

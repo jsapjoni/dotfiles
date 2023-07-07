@@ -134,6 +134,7 @@ $AppsList | ForEach-Object {
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
 $CommonConfigs
 $WindowsConfigs
+$AppSource
 foreach ($app in $AppsList){
   Write-Host "Checking $app... "
   (($AppSource | Where-Object {$_.Name -like $App}) -is [System.Object])

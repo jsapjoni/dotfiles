@@ -86,9 +86,10 @@ else {
 
 # ------------------------- VARIABLE DECLEARATION ------------------------------#
 $ProfileType = $PROFILE.CurrentUserCurrentHost
-$ConfigFiles = "$($MyInvocation.MyCommand.Path | Split-Path)\windows\powershell\config"
-$WindowsConfigs = "$($MyInvocation.MyCommand.Path | Split-Path)\Windows"
-$CommonConfigs = "$($MyInvocation.MyCommand.Path | Split-Path)\Common"
+$DotfilesRepo = "$HOME\.dotfiles"
+$WindowsConfigs = "$DotfilesRepo\Windows"
+$CommonConfigs = "$DotfilesRepo\Common"
+$ConfigFiles = "$DotfilesRepo\Windows\powershell\config"
 # ------------------------------------------------------------------------------#
 
 $AppsList = @(
@@ -117,7 +118,7 @@ $AppsList | ForEach-Object {
   if ((scoop list $_).Name -like $_) {
     Write-Host "The app: " -NoNewline
     Write-Host $_ -ForegroundColor Green -NoNewline
-    Write-Host " is installed!" -NoNewline
+    Write-Host " is installed!" 
   }
   
   else {
@@ -127,25 +128,22 @@ $AppsList | ForEach-Object {
     Write-Host "Initiating installation..."
     scoop install $_
   }
-  
-  Write-Host "Setting up configuration for " -NoNewline
-  Write-Host $_ -ForegroundColor Green
-  
-  foreach ($app in $Apps) {
-    Get-ChildItem -Path $WindowsConfigs, $CommonConfigs |
-    ForEach-Object {
-      if ($app -like $_.Name) {
-        try { 
-          Write-Host "Attempting to import config file for " -NoNewline
-          Write-Host "$app ..."
-          . "$($_.FullName)\$app-config.ps1"
-          Write-Host "Imported config file for app " -NoNewline
-          Write-Host "$app" -ForegroundColor Green -NoNewline
-        }
-        catch { 
-          Write-Host "Could not find the specified config file for app " -NoNewline
-          Write-Host "$app" -ForegroundColor Red
-        }
+}
+
+$AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
+foreach ($app in $AppsList) {
+  $AppSource | ForEach-Object {
+    if ($app -like $_.Name) {
+      try { 
+        Write-Host "Attempting to import config file for " -NoNewline
+        Write-Host "$app ..."
+        . "$($_.FullName)\$app-config.ps1"
+        Write-Host "Imported config file for app " -NoNewline
+        Write-Host "$app" -ForegroundColor Green 
+      }
+      catch { 
+        Write-Host "Could not find the specified config file for app " -NoNewline
+        Write-Host "$app" -ForegroundColor Red
       }
     }
   }

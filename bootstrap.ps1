@@ -133,6 +133,7 @@ $AppsList | ForEach-Object {
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
 foreach ($app in $AppsList) {
   $CurrentApp = ($AppSource | Where-Object {$_.Name -like $app})
+  $CurrentApp
   if ($CurrentApp -is [System.Object]) {
     Write-Host "Found app config folder"
     Write-Host "Attempting to import config file for " -NoNewline

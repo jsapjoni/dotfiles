@@ -132,17 +132,13 @@ $AppsList | ForEach-Object {
 
 #$AppSource = Get-ChildItem -Path .\common\, .\windows\
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
-$CommonConfigs
-$WindowsConfigs
-$AppSource
-($AppSource | Where-Object {$_.Name -like $App})
-foreach ($app in $AppsList){
-  Write-Host "Checking $app... "
+foreach ($App in $AppsList){
+  Write-Host "Checking $App... "
   (($AppSource | Where-Object {$_.Name -like $App}) -is [System.Object])
   if (($AppSource | Where-Object {$_.Name -like $App}) -is [system.object]) {
     Write-Host "Found app config folder"
     Write-Host "Attempting to import config file for " -NoNewline
-    Write-Host "$app is true"
+    Write-Host "$App is true"
     #. "$($CurrentApp.FullName)"
     Write-Host "Found app config folder"
     Write-Host "Attempting to import config file for " -NoNewline

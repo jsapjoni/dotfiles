@@ -17,10 +17,10 @@ catch {
 try {
   if (!(Get-Content -Path "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"|
     Select-String -Pattern "Invoke-Expression \(&starship init powershell\)") -is [System.Object]) {
-    "(&starship init powershell) | iex" | Out-File -FilePath "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Append -Encoding utf8NoBOM
-  }
-  else {
-    
+    $AddContentSplat = @{
+      "Path" = "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"
+      "Value" = "(&starship init powershell) | iex"
+    } ; Add-Content @AddContentSplat
   }
 }
 catch {

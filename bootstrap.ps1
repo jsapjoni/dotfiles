@@ -134,6 +134,8 @@ $AppsList | ForEach-Object {
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
 foreach ($app in $AppsList){
   Write-Host "Checking $app... "
+  $CommonConfigs
+  $WindowsConfigs
   ($AppSource | Where-Object {$_.Name -like $App})
   if (($AppSource | Where-Object {$_.Name -like $App}) -is [system.object]) {
     Write-Host "Found app config folder"

@@ -17,7 +17,10 @@ catch {
 try {
   if (!(Get-Content -Path "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"|
     Select-String -Pattern "Invoke-Expression \(&starship init powershell\)") -is [System.Object]) {
-    "Invoke-Expression (&starship init powershell)" >> "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"
+    "(&starship init powershell) | iex" >> "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"
+  }
+  else {
+    
   }
 }
 catch {

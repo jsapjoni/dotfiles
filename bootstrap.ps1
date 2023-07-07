@@ -87,8 +87,8 @@ else {
 # ------------------------- VARIABLE DECLEARATION ------------------------------#
 $ProfileType = $PROFILE.CurrentUserCurrentHost
 $DotfilesRepo = "$HOME\.dotfiles"
-$WindowsConfigs = "$DotfilesRepo\Windows"
-$CommonConfigs = "$DotfilesRepo\Common"
+$WindowsApps= "$DotfilesRepo\Windows"
+$CommonApps= "$DotfilesRepo\Common"
 $ConfigFiles = "$DotfilesRepo\Windows\powershell\config"
 # ------------------------------------------------------------------------------#
 
@@ -130,20 +130,21 @@ $AppsList | ForEach-Object {
   }
 }
 
-$AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
+$AppSource = Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1
 
 foreach ($App in $AppsList){
-  Write-Host "Checking $App... "
-  $AppSource.Name
-  ($AppSource | Where-Object {$_.Name -like $App})
-  (($AppSource | Where-Object {$_.Name -like $App}) -is [System.Object])
-  if (($AppSource | Where-Object {$_.Name -like $App}) -is [system.object]) {
-    Write-Host "Found app config folder"
+  Write-Host "Locating " -NoNewline
+  Write-Host "$App-config.ps1 " -NoNewline -ForegroundColor Green
+  Write-Host "for " -NoNewline
+  Write-Host "$App" -ForegroundColor Green
+  if (($AppSource | Where-Object {$_.Name -like "$App-config.ps1"}) -is [system.object]) {
+    Write-Host "Found " -NoNewline
+    Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
+    Write-Host "for " -NoNewline
+    Write-Host "$App" -ForegroundColor Green
     Write-Host "Attempting to import config file for " -NoNewline
     Write-Host "$App is true"
-    #. "$($CurrentApp.FullName)"
-    Write-Host "Found app config folder"
-    Write-Host "Attempting to import config file for " -NoNewline
+    . "$($AppSource)\$App-config.ps1"
   }
 }
 

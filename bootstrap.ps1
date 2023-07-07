@@ -138,7 +138,6 @@ foreach ($App in $AppsList){
   Write-Host "$App " -ForegroundColor Green 
   $AppDir = ($AppSource | Where-Object {$_.Name -like "$App-config.ps1"})
   if ($AppDir -is [system.object]) {
-    $AppDir
     Write-Host "Found " -NoNewline
     Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
     Write-Host "for " -NoNewline

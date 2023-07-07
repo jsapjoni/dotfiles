@@ -50,7 +50,7 @@ if ((scoop list git).Name -like "git") {
 else {
   Write-Host "The app " -NoNewline
   Write-Host "git" -ForegroundColor Red -NoNewline
-  Write-Host " is not installed." -NoNewline
+  Write-Host " is not installed."
   Write-Host "Initiating installation..."
   scoop install git
   if (!($LASTEXITCODE -eq 0)) {
@@ -111,7 +111,7 @@ $AppsList = @(
   "sudo",
   "ripgrep",
   "windows-terminal",
-  "main/starship"
+  "starship"
   "lazygit"
 )
 

@@ -131,6 +131,7 @@ $AppsList | ForEach-Object {
 }
 
 $AppSource = Get-ChildItem -Path $CommonConfigs, $WindowsConfigs
+$AppSource.Name
 foreach ($app in $AppsList) {
   $AppSource | ForEach-Object {
     if ($app -like $_.Name) {

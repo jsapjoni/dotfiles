@@ -85,7 +85,6 @@ else {
 }
 
 # ------------------------- VARIABLE DECLEARATION ------------------------------#
-$ProfileType = $PROFILE.CurrentUserCurrentHost
 $DotfilesRepo = "$HOME\.dotfiles"
 $WindowsApps= "$DotfilesRepo\Windows"
 $CommonApps= "$DotfilesRepo\Common"
@@ -113,7 +112,9 @@ $AppsList = @(
   "starship"
   "lazygit"
 )
-
+#------------------------------------------------------------------------------#
+# Checks and install apps based on the list above -----------------------------#
+#------------------------------------------------------------------------------#
 $AppsList | ForEach-Object {
   if ((scoop list $_).Name -like $_) {
     Write-Host "The app: " -NoNewline
@@ -130,6 +131,9 @@ $AppsList | ForEach-Object {
   }
 }
 
+#--------------------------------------------------------------------------------------#
+# Applies the configuration if the app has configuration file in <app>\<app>-config.ps1#
+#--------------------------------------------------------------------------------------#
 $AppSource = Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1
 foreach ($App in $AppsList){
   Write-Host "Attempting to find app configuration file: " -NoNewline
@@ -151,24 +155,4 @@ foreach ($App in $AppsList){
       Write-Host "Could not import $app-config.ps1 file"
     }
   }
-}
-
-Write-Host "Bootstrapping powershell profile from dotfiles"
-if (!(Test-Path -Path $ProfileType)){
-  Write-Host "Importing profile..."
-  try {
-    $CopyItemArgs = @{
-      "Path" = "$ConfigFiles\PSProfile.ps1"
-      "Destination" = $ProfileType
-    }
-    Copy-Item @CopyItemArgs -ErrorAction Stop
-    Write-Host "Profile import complete!" -ForegroundColor Green
-  }
-  catch {
-    Write-Host "Could not import profile" -ForegroundColor Red
-    throw
-  }
-} 
-else { 
-  Write-Host "Profile already exists" -ForegroundColor Green
 }

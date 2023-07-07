@@ -15,9 +15,9 @@ catch {
 }
 
 try {
-  if (!(Get-Content -Path $PROFILE.CurrentUserCurrentHost |
+  if (!(Get-Content -Path "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"|
     Select-String -Pattern "Invoke-Expression \(&starship init powershell\)") -is [System.Object]) {
-    "Invoke-Expression \(&starship init powershell\)" >> $PROFILE.CurrentUserCurrentHost
+    "Invoke-Expression \(&starship init powershell\)" >> "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"
   }
 }
 catch {

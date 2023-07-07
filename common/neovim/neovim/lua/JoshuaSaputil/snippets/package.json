@@ -1,0 +1,14 @@
+{
+  "name": "Powershell VSCode Snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "ps1",
+        "path": "./powershell.json"
+      }
+    ]
+  }
+}

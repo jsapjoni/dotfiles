@@ -139,13 +139,18 @@ foreach ($App in $AppsList){
   Write-Host "$App " -ForegroundColor Green 
   $AppDir = ($AppSource | Where-Object {$_.Name -like "$App-config.ps1"})
   if ($AppDir -is [system.object]) {
-    Write-Host "Found " -NoNewline
-    Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
-    Write-Host "for " -NoNewline
-    Write-Host "$App" -ForegroundColor Green
-    Write-Host "Attempting to import config file for " -NoNewline
-    Write-Host "$App" -ForegroundColor Green
-    . "$($AppDir.FullName)"
+    try {
+      Write-Host "Found " -NoNewline
+      Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
+      Write-Host "for " -NoNewline
+      Write-Host "$App" -ForegroundColor Green
+      Write-Host "Attempting to import config file for " -NoNewline
+      Write-Host "$App" -ForegroundColor Green
+      . "$($AppDir.FullName)"
+    }
+    catch {
+      Write-Host "Could not import $app-config.ps1 file"
+    }
   }
 }
 

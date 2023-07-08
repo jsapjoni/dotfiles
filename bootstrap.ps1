@@ -59,6 +59,7 @@ else {
   }
   if ((scoop list git).Name -like "git") {
     scoop bucket add extras
+    scoop bucket add nerd-fonts
   }
 }
 
@@ -107,7 +108,8 @@ $AppInstallList = @(
   "sudo",
   "ripgrep",
   "starship",
-  "lazygit"
+  "lazygit",
+  "Hack-NF"
 )
 # ------------------------------------------------------------------------------#
 

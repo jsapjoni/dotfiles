@@ -115,19 +115,19 @@ $AppsList = @(
 #------------------------------------------------------------------------------#
 # Checks and install apps based on the list above -----------------------------#
 #------------------------------------------------------------------------------#
-$AppsList | ForEach-Object {
-  if ((scoop list $_).Name -like $_) {
+foreach ($App in $AppsList) {
+  if ((scoop list $App).Name -like $App) {
     Write-Host "The app: " -NoNewline
-    Write-Host $_ -ForegroundColor Green -NoNewline
+    Write-Host $App -ForegroundColor Green -NoNewline
     Write-Host " is installed!" 
   }
   
   else {
     Write-Host "The app: " -NoNewline
-    Write-Host $_ -ForegroundColor Red -NoNewline
+    Write-Host $App -ForegroundColor Red -NoNewline
     Write-Host " is not installed." -NoNewline
     Write-Host "Initiating installation..."
-    scoop install $_
+    scoop install $App
   }
 }
 

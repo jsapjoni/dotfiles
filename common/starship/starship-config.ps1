@@ -15,12 +15,17 @@ catch {
 }
 
 try {
-  if (!(Get-Content -Path "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"|
-    Select-String -Pattern "Invoke-Expression \(&starship init powershell\)") -is [System.Object]) {
+  $FindStr = Get-Content -Path $PROFILE.CurrentUserCurrentHost | 
+    Select-String -Pattern "Invoke-Expression \(&starship init powershell\)"
+  if (!($FindStr -is [System.Object])) {
     $AddContentSplat = @{
-      "Path" = "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1"
-      "Value" = "(&starship init powershell) | iex"
+      "Path" = "$($PROFILE.CurrentUserCurrentHost)"
+      "Value" = "Invoke-Expression (&starship init powershell)"
     } ; Add-Content @AddContentSplat
+    Write-Host "Starship startup script applied"
+  }
+  else {
+    Write-Host "Starship startup script already applied"
   }
 }
 catch {

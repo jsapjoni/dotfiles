@@ -136,7 +136,7 @@ foreach ($App in $AppInstallList) {
 $AppsWithConfigfolder = Get-ChildItem -Path $CommonApps, $WindowsApps
 Write-Host "Applying configuration on following apps " -NoNewline
 Write-Host "$($AppsWithConfigfolder.Name)" -ForegroundColor Green
-foreach ($App in $AppsWithConfigfolder) {
+foreach ($App in ($AppsWithConfigfolder.Name)) {
   Write-Host "Attempting to find app configuration file: " -NoNewline
   Write-Host "$App-config.ps1 " -NoNewline 
   Write-Host "for " -NoNewline

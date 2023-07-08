@@ -1,6 +1,6 @@
 if ($PSVersionTable.PSEdition -ne "Desktop") {
   if ($null -ne (Get-Command powershell -ErrorAction SilentlyContinue)) {
-    pwsh.exe -File $($MyInvocation.MyCommand.Definition)
+    powershell.exe -File $($MyInvocation.MyCommand.Definition)
     exit
   }
   else {

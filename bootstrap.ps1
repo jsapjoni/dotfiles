@@ -88,9 +88,8 @@ else {
 $DotfilesRepo = "$HOME\.dotfiles"
 $WindowsApps= "$DotfilesRepo\Windows"
 $CommonApps= "$DotfilesRepo\Common"
-# ------------------------------------------------------------------------------#
 
-$AppsList = @(
+$AppInstallList = @(
   "pwsh",
   "7zip",
   "bat",
@@ -112,10 +111,12 @@ $AppsList = @(
   "starship"
   "lazygit"
 )
+# ------------------------------------------------------------------------------#
+
 #------------------------------------------------------------------------------#
 # Checks and install apps based on the list above -----------------------------#
 #------------------------------------------------------------------------------#
-foreach ($App in $AppsList) {
+foreach ($App in $AppInstallList) {
   if ((scoop list $App).Name -like $App) {
     Write-Host "The app: " -NoNewline
     Write-Host $App -ForegroundColor Green -NoNewline
@@ -134,25 +135,38 @@ foreach ($App in $AppsList) {
 #--------------------------------------------------------------------------------------#
 # Applies the configuration if the app has configuration file in <app>\<app>-config.ps1#
 #--------------------------------------------------------------------------------------#
-$AppSource = Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1
-foreach ($App in $AppsList){
+$AppsWithConfigfolder = Get-ChildItem -Path $CommonApps, $WindowsApps
+Write-Host "Applying configuration on following apps " -NoNewline
+Write-Host "$($AppsWithConfigfolder.Name)" -ForegroundColor Green
+foreach ($App in $AppsWithConfigfolder) {
   Write-Host "Attempting to find app configuration file: " -NoNewline
   Write-Host "$App-config.ps1 " -NoNewline 
   Write-Host "for " -NoNewline
   Write-Host "$App " -ForegroundColor Green 
-  $AppDir = ($AppSource | Where-Object {$_.Name -like "$App-config.ps1"})
-  if ($AppDir -is [system.object]) {
-    try {
-      Write-Host "Found app configuration file: " -NoNewline
-      Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
-      Write-Host "for " -NoNewline
-      Write-Host "$App" -ForegroundColor Green
-      Write-Host "Attempting to import app configuration file for " -NoNewline
-      Write-Host "$App" -ForegroundColor Green
-      . "$($AppDir.FullName)"
+  try {
+    $AppDir = (Get-ChildItem -Path $CommonApps, $WindowsApps -Depth 1 | 
+      Where-Object {$_.Name -like "$App-config.ps1"})
+    if ($null -eq $AppDir) {
+      throw 
     }
-    catch {
-      Write-Host "Could not import $app-config.ps1 file"
-    }
+  }
+  catch {
+    Write-Host "The app " -NoNewline
+    Write-Host "$App " -ForegroundColor Red -NoNewline
+    Write-Host "do not contain configuration file."
+    continue
+  }
+  
+  try {
+    Write-Host "Found app configuration file: " -NoNewline
+    Write-Host "$App-config.ps1 " -ForegroundColor Green -NoNewline
+    Write-Host "for " -NoNewline
+    Write-Host "$App" -ForegroundColor Green
+    Write-Host "Attempting to import app configuration file for " -NoNewline
+    Write-Host "$App" -ForegroundColor Green
+    . "$($AppDir.FullName)"
+  }
+  catch {
+    Write-Host "Could not import $app-config.ps1 file"
   }
 }

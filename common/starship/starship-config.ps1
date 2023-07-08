@@ -5,7 +5,6 @@ try {
     "Value" = $(Resolve-Path ~\.dotfiles\common\starship\starship.toml)
     "ErrorAction" = "Stop"
   } ; New-Item @NewItemSymbolicLinkSplash | Out-Null 
-
 }
 catch [System.IO.IOException] {
   Write-Host "SymbolicLink already exists"
@@ -14,6 +13,7 @@ catch {
   Write-Host "Could not create new SymbolicLink"
 }
 
+$Script = @"
 try {
   $FindStr = Get-Content -Path $PROFILE.CurrentUserCurrentHost | 
     Select-String -Pattern "Invoke-Expression \(&starship init powershell\)"
@@ -31,3 +31,10 @@ try {
 catch {
   Write-Host "Could not write configuration to powershell profile"
 }
+
+"@
+
+powershell.exe -Command $Script
+pwsh.exe -Command $Script
+
+

@@ -1,7 +1,7 @@
 try {
   $NewItemSymbolicLinkSplash = @{
     "ItemType" = "SymbolicLink"
-    "Path" = "$env:LOCALAPPDATA\Microsoft\Windows Terminal\settings.json"
+    "Path" = "$HOME\scoop\apps\windows-terminal\current\settings\settings.json"
     "Value" = $(Resolve-Path ~\.dotfiles\windows\windows-terminal\settings.json)
     "ErrorAction" = "Stop"
   } ; New-Item @NewItemSymbolicLinkSplash | Out-Null 

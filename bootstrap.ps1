@@ -125,7 +125,7 @@ foreach ($App in $AppsList) {
   else {
     Write-Host "The app: " -NoNewline
     Write-Host $App -ForegroundColor Red -NoNewline
-    Write-Host " is not installed." -NoNewline
+    Write-Host " is not installed."
     Write-Host "Initiating installation..."
     scoop install $App
   }

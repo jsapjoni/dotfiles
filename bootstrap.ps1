@@ -88,7 +88,6 @@ else {
 $DotfilesRepo = "$HOME\.dotfiles"
 $WindowsApps= "$DotfilesRepo\Windows"
 $CommonApps= "$DotfilesRepo\Common"
-
 $AppInstallList = @(
   "pwsh",
   "7zip",
@@ -107,8 +106,7 @@ $AppInstallList = @(
   "python",
   "sudo",
   "ripgrep",
-  "windows-terminal",
-  "starship"
+  "starship",
   "lazygit"
 )
 # ------------------------------------------------------------------------------#

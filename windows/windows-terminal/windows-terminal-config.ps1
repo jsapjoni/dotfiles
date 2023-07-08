@@ -8,6 +8,7 @@ if ((Get-Command -Name wt).Source -like "*WindowsApps\wt.exe") {
       "Path" = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
       "Value" = $(Resolve-Path ~\.dotfiles\windows\windows-terminal\settings.json)
       "ErrorAction" = "Stop"
+      "Force" = $true
     } ; New-Item @NewItemSymbolicLinkSplash | Out-Null 
   }
   catch [System.IO.IOException] {

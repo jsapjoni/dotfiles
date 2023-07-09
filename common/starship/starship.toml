@@ -62,10 +62,10 @@ read_only_style = 'red'
  
 [battery]
 format = '[$symbol$percentage]($style) '
-full_symbol = ' '
-charging_symbol = ' '
-discharging_symbol = ' '
-empty_symbol = ' '
+full_symbol = '󰁹 '
+charging_symbol = '󱟦 '
+discharging_symbol = '󱟞 '
+empty_symbol = '󱃌 '
 
 [username]
 style_user = 'bold yellow'
@@ -221,10 +221,10 @@ Solus = "ﴱ "
 SUSE = " "
 Ubuntu = " "
 Unknown = " "
-Windows = " "
+Windows = " "
 
 [package]
-symbol = " "
+symbol = " "
 
 [pijul_channel]
 symbol = "🪺 "
@@ -233,7 +233,7 @@ symbol = "🪺 "
 symbol = " "
 
 [rlang]
-symbol = "ﳒ "
+symbol = "󰰠 "
 
 [ruby]
 symbol = " "

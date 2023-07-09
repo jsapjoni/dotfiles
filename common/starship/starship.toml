@@ -41,11 +41,11 @@ success_symbol = '[❯❯](bold green) '
 error_symbol = '[✗](bold red) '
 
 [shell]
-bash_indicator = 'bash'
-zsh_indicator = 'zsh'
-fish_indicator = 'fish'
-powershell_indicator = 'pwsh'
-unknown_indicator = 'mystery shell'
+bash_indicator = ' bash'
+zsh_indicator = ' zsh'
+fish_indicator = ' fish'
+powershell_indicator = ' pwsh'
+unknown_indicator = ' mystery shell'
 style = 'cyan bold'
 disabled = false
 
@@ -62,10 +62,9 @@ read_only_style = 'red'
  
 [battery]
 format = '[$symbol$percentage]($style) '
-full_symbol = ' '
-charging_symbol = ' '
-discharging_symbol = ' '
-empty_symbol = ' '
+full_symbol = 'Full '
+charging_symbol = 'Charge '
+discharging_symbol = ' '
 
 [username]
 style_user = 'bold yellow'
@@ -221,7 +220,7 @@ Solus = "ﴱ "
 SUSE = " "
 Ubuntu = " "
 Unknown = " "
-Windows = " "
+Windows = " "
 
 [package]
 symbol = " "

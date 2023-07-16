@@ -1,3 +1,6 @@
+Write-Host "Importing the file " -NoNewline
+Write-Host $(( $MyInvocation.MyCommand.Definition ).Split("\")[-1]) -ForegroundColor Green
+
 # PSReadLine Module
 Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineOption -EditMode Emacs
@@ -10,8 +13,8 @@ Set-PSFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory
 # Alias
 Set-Alias vim nvim	
 Set-Alias ll ls
-Set-Alias grep findstr
-Set-Alias vim nvim
 
-# Oh My Posh
-oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/atomicBit.omp.json" | Invoke-Expression
+# Alias - Git
+Set-Alias tig $env:USERPROFILE\AppData\Local\Programs\Git\usr\bin\tig.exe
+Set-Alias less $env:USERPROFILE\AppData\Local\Programs\Git\usr\bin\less.exe
+Set-Alias g git

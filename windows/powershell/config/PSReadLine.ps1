@@ -1,3 +1,6 @@
+Write-Host "Importing the file " -NoNewline
+Write-Host $(( $MyInvocation.MyCommand.Definition ).Split("\")[-1]) -ForegroundColor Green
+
 Set-PSReadLineKeyHandler -Key ')',']','}' `
   -BriefDescription SmartCloseBraces `
   -LongDescription "Insert closing brace or skip" `

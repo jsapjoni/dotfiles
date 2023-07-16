@@ -19,11 +19,11 @@ foreach ($Configuration in $ConfigurationList) {
       continue
     }
     else {
-      . ($ConfigurationFiles | Where-Object {$_.BaseName -like $Configuration})
+      . ($ConfigurationFiles | Where-Object {$_.BaseName -like $Configuration}).FullName
     }
   }
   catch {
-    
+
   }
 }
 

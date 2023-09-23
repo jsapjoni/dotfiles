@@ -66,7 +66,12 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
-lspconfig["bashls"].setup({})
+lspconfig["bashls"].setup({
+	filetypes = { "sh", "zsh", "bash" },
+	bashIde = {
+		globPattern = "*@(.zsh|.sh|.inc|.bash|.command)",
+	},
+})
 
 local signs = { Error = " ", Warn = " ", Hint = "ﴞ ", Info = " " }
 for type, icon in pairs(signs) do

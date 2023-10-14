@@ -1,7 +1,7 @@
 # Declear Variables
 $DOTFILES_ROOT = $($MyInvocation.MyCommand.Definition | Split-Path | Split-Path | Split-Path)
-$GITHUB_USER = "sw3103"
-$GITHUB_REPOSITORY = "movemouse"
+$GITHUB_USER = "microsoft"
+$GITHUB_REPOSITORY = "PowerToys"
 $GITHUB_APIKEY = (Get-Content -Path "$DOTFILES_ROOT\.env" | 
   Select-String GITHUB_APIKEY ).ToString().Split("=")[-1]
 $INSTALL_PATH = "$env:LOCALAPPDATA\$GITHUB_REPOSITORY"
@@ -18,8 +18,8 @@ $LatestRelease = @{
 } ; $LatestRelease = Invoke-RestMethod @LatestRelease
 
 # Filter which asset to be downloaded in list of asset
-$Assets = $LatestRelease.assets |
-  Where-Object {$_.Name -like "*.zip"}
+$Assets = $LatestRelease.assets | 
+  Where-Object {( $_.Name -like "*PowerToysSetup*" ) -and ( $_.Name -like "*x64*" )}
 
 # Check new release
 if (Test-Path "$INSTALL_PATH\$($Assets.Name)") {

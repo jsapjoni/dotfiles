@@ -4,9 +4,9 @@
 $PwshProfile = "$($MyInvocation.MyCommand.Definition | Split-Path)\$PSEdition"
 $ConfigurationFiles = Get-ChildItem -Path $PwshProfile
 $ConfigurationList = @(
-  "Starship",
-  "Terminal-Icons",
   "PSReadLine",
+  "Terminal-Icons",
+  "Starship",
   "UserProfile"
 )
 
@@ -27,23 +27,8 @@ foreach ($Configuration in $ConfigurationList) {
   }
 }
 
+#------------------------------------------------------------------#
+# Invoke Starship Prompt
+#------------------------------------------------------------------#
 
-#foreach ($Module in $Modules.GetEnumerator()) {
-#  if ($Module.Value -eq "Latest") {
-#    Import-Module -Name $Module.Name -Debug
-#  }
-#  else {
-#    $ModuleSpecification = [Microsoft.PowerShell.Commands.ModuleSpecification]@{
-#      "ModuleName" = $Module.Name
-#      "ModuleVersion" = $Module.Value
-#    }
-#    if (Get-Module -ListAvailable | 
-#      Where-Object {( $_.Name -eq $ModuleSpecification.Name ) -and ($_.Version -eq $ModuleSpecification.Version)}) {
-#      Import-Module -FullyQualifiedName $ModuleSpecification -Debug
-#    }
-#    else {
-#      Write-Host "Module $($ModuleSpecification.Name) version $($ModuleSpecification.Version) was not found."
-#    }
-#  }
-#}
-
+Invoke-Expression (&starship init powershell)

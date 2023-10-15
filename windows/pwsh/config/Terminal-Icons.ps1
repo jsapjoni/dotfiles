@@ -6,7 +6,21 @@ $Module = @{
 }
 
 if ($Module.Values -eq "Latest") {
-  Import-Module -Name $Module.Keys
+  try {
+    Import-Module -Name $Module.Keys -ErrorAction Stop
+  }
+  catch {
+    Write-Host "  | Could not find module $($Module.Keys)"
+    Write-Host "  | Attempting to install $($Module.Keys)"
+    Install-Module -Name "Terminal-Icons" -Repository PSGallery -Force
+    Write-Host "  | Successfully installed module $($Module.Keys)"
+    try {
+      Import-Module -Name $Module.Keys -Force -ErrorAction Stop 
+    }
+    catch {
+      Write-Host "  | Could not import the newly installed module $($Module.Keys)"
+    }
+  }
 } 
 
 else {

@@ -26,6 +26,7 @@ $NewItemSymbolicLinkSplash = @{
   "ErrorAction" = "Stop"
   "Force" = $true
 } ; New-Item @NewItemSymbolicLinkSplash | Out-Null
+
 Write-Host "New symlink at path: " -NoNewline
 Write-Host "$($PROFILE.CurrentUserCurrentHost | Split-Path)\$PSEdition" -ForegroundColor Green
 

@@ -38,8 +38,9 @@ keymap.set("n", "<leader>c", "<cmd>bd!<cr>")
 --------------------
 
 -- neotree
-keymap.set("n", "<leader>e", ":NeoTreeShowToggle<CR>")
-keymap.set("n", "<leader>o", ":NeoTreeFocus<CR>")
+keymap.set("n", "<leader>e", ":Neotree toggle")
+--keymap.set("n", "<leader>o", ":NeoTreeFocus<CR>")
+keymap.set("n", "<leader>fl", ":Neotree float<CR>")
 
 -- telescope
 keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")

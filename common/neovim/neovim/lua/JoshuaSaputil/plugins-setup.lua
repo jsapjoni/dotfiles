@@ -22,7 +22,7 @@ lazy.setup({
 	-- Essential plugins
 	"ur4ltz/surround.nvim",
 	"numToStr/Comment.nvim",
-	"lukas-reineke/indent-blankline.nvim",
+	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 	"folke/which-key.nvim",
 	--"folke/noice.nvim",
 
@@ -34,12 +34,7 @@ lazy.setup({
 	"BurntSushi/ripgrep",
 
 	-- File explorer
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		keys = {
-			{ "<leader>e", "<cmd>NeoTreeShowToggle<cr>", desc = "NeoTree" },
-		},
-	},
+	"nvim-neo-tree/neo-tree.nvim",
 
 	-- Statusline
 	"nvim-lualine/lualine.nvim",

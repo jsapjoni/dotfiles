@@ -203,4 +203,20 @@ ln -s "$SOURCE_CONFIG" "$TARGET_CONFIG"
 
 echo "WezTerm configuration is symlinked to $SOURCE_CONFIG"
 
+# Uninstall firefox-esr
+PACKAGE="firefox-esr"
+
+# Check if Firefox ESR is installed using apt list and grep
+if apt list --installed 2>/dev/null | grep -q "^$PACKAGE/"; then
+    echo "$PACKAGE is installed. Proceeding with uninstallation."
+
+    # Uninstall Firefox ESR completely, including its configuration files and unneeded dependencies
+    sudo apt purge $PACKAGE -y
+    sudo apt autoremove -y
+
+    echo "$PACKAGE has been completely uninstalled."
+else
+    echo "$PACKAGE is not installed."
+fi
+
 sudo reboot

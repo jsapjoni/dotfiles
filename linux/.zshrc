@@ -100,3 +100,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias firefox='flatpak run org.mozilla.firefox'
+alias wezterm='flatpak run org.wezfurlong.wezterm'
+alias nvim='flatpak run io.neovim.nvim'

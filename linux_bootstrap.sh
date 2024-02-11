@@ -76,7 +76,7 @@ if [ -f "~/dotfiles/linux/.zshrc" ]; then
     fi
     
     # Create symlink
-    ln -s "~/dotfiles/linux/.zshrc" "~/.zshrc"
+    ln -s "~/dotfiles/linux/.zshrc" "~/.zshrc" --force
     echo "Linked ~/dotfiles/linux/.zshrc to ~/.zshrc"
 else
     echo "~/dotfiles/linux/.zshrc not found. Please ensure it exists."
@@ -102,7 +102,7 @@ plugins=(
 for plugin in "${plugins[@]}"; do
     # Extract plugin name from the repository URL
     plugin_name=$(basename "$plugin")
-    plugin_name=${plugin_name%%.*}
+    plugin_name=${plugin_name%%.*} 
 
     # Check if the plugin is already installed
     if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/$plugin_name" ]; then
@@ -137,7 +137,7 @@ echo "All Flatpak applications installed. Please run 'source ~/.bashrc' to activ
 # Check if Neovim is installed via Flatpak
 if flatpak list | grep -q 'org.vim.Neovim'; then
     # Create symlink for Neovim configuration
-    ln -sf ~/dotfiles/common/neovim/neovim ~/.var/app/org.vim.Neovim/config/nvim
+    ln -sf ~/dotfiles/common/neovim/neovim ~/.var/app/org.vim.Neovim/config/nvim --force
     echo "Neovim configuration symlinked."
 else
     echo "Neovim is not installed via Flatpak."
@@ -181,7 +181,7 @@ if [ -L "/home/jsaputil/.config/starship.toml" ]; then
 fi
 
 # Create symlink for starship.toml
-ln -s ~/dotfiles/common/starship/starship.toml ~/.config/starship.toml
+ln -s ~/dotfiles/common/starship/starship.toml ~/.config/starship.toml --force
 echo "Created symlink for starship.toml"
 
 # Download nerd-fonts
@@ -199,7 +199,7 @@ mkdir -p "$(dirname "$TARGET_CONFIG")"
 rm -f "$TARGET_CONFIG"
 
 # Create a symlink to your custom configuration
-ln -s "$SOURCE_CONFIG" "$TARGET_CONFIG"
+ln -s "$SOURCE_CONFIG" "$TARGET_CONFIG" --force
 
 echo "WezTerm configuration is symlinked to $SOURCE_CONFIG"
 

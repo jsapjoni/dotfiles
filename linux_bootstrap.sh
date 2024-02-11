@@ -203,3 +203,4 @@ ln -s "$SOURCE_CONFIG" "$TARGET_CONFIG"
 
 echo "WezTerm configuration is symlinked to $SOURCE_CONFIG"
 
+sudo reboot

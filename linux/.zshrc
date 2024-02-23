@@ -103,3 +103,4 @@ source $ZSH/oh-my-zsh.sh
 alias firefox='flatpak run org.mozilla.firefox'
 alias wezterm='flatpak run org.wezfurlong.wezterm'
 alias nvim='flatpak run io.neovim.nvim'
+unset LD_PRELOAD
